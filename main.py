@@ -25,10 +25,10 @@ form = """
         </style>
     </head>
     <body>
-        <form action = "/" method = "post">
+        <form action = "/encrypt" method = "post">
             <label for = "rot">Rotate by:</label>
-            <input id = "rotation" type = "text" name = "rot" />
-            <textarea id = "text_area" type = "text" name = "text" placeholder = "test..."></textarea>
+            <input id = "rot" type = "text" name = "rot" />
+            <textarea id = "text" type = "text" name = "text" placeholder = "test..."></textarea>
             <input type = "submit" value = "Submit Query"/>
         </form>
     </body>
@@ -38,5 +38,14 @@ form = """
 @app.route("/")
 def index():
     return form
+
+@app.route("/encrypt", methods = ['POST'])
+def encrypt():
+    rot = int(request.form["rot"])
+    text = request.form["text"]
+
+    message = rotate_string(text, rot)
+
+    return '<h1> Your new message is: "' + message + '."</h1>'
 
 app.run()
